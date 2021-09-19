@@ -17,6 +17,7 @@ import DocumentRow from "../components/DocumentRow";
 
 export default function Home() {
   const [session] = useSession();
+  if (!session) return <Login />;
 
   const [showModal, setShowModal] = useState(false);
   const [input, setInput] = useState("");
@@ -28,8 +29,6 @@ export default function Home() {
       .collection("docs")
       .orderBy("timestamp", "desc")
   );
-
-  if (!session) return <Login />;
 
   const createDocument = () => {
     if (!input) return;
@@ -119,7 +118,6 @@ export default function Home() {
             <p className="mr-12">Date Created</p>
             <Icon name="folder" size="3xl" color="gray" />
           </div>
-
           {snapshot?.docs.map((doc) => (
             <DocumentRow
               key={doc.id}
